@@ -3,22 +3,19 @@ import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 @Entity()
 export class Coupons {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn("increment")
     id: number;
 
-    @Column()
+    @Column("varchar")
     code: string;
 
-    @Column()
+    @Column("varchar")
     email: string;
-    //customer_email
 
-    @Column()
+    @Column("datetime")
     assigned: Date;
-    //assigned_at,
     
-    @Column()
+    @Column("datetime",)
     expired: Date;
-    // expires_at, 
 
 }

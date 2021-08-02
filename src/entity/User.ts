@@ -3,16 +3,16 @@ import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 @Entity()
 export class User {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn("increment")
     id: number;
 
-    @Column()
+    @Column("nvarchar")
     firstName: string;
 
-    @Column()
+    @Column("nvarchar")
     lastName: string;
 
-    @Column()
+    @Column("int")
     age: number;
 
 }

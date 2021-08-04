@@ -2,7 +2,8 @@ import "reflect-metadata";
 import { getRepository, getConnection} from "typeorm";
 import { Coupons } from "../../entity/Coupons";
 import moment = require("moment");
-const response = require("../../routes/response")
+import { answer } from "../../routes/response";
+
 const time = require("moment")
 
 async function queryCoupon(email, code, req, res) {
@@ -14,12 +15,12 @@ async function queryCoupon(email, code, req, res) {
     .getOne()
     .then(data =>{
         if(data == null){
-            response.answer(req, res, 422, "No existe correspondencia")
+            answer(req, res, 404, "no correspondence")
         }
-        response.answer(req, res, 200, data)
+        answer(req, res, 200, data)
     })
-    .catch(e => {
-        response.answer(req, res, 422, "Error", e)
+    .catch(() => {
+        answer(req, res, 404, "Error")
     })
 }
 
@@ -29,14 +30,14 @@ async function addCoupon(code, req, res){
     .insert()
     .into(Coupons)
     .values([
-        { code: code }, 
+        { code: code },
     ])
     .execute()
-    .then(data =>{
-        response.answer(req, res, 201, `creado con exito, ${code}`)
+    .then(() =>{
+        answer(req, res, 201, `creado con exito, ${code}`)
     })
     .catch(e => {
-        response.answer(req, res, 422, e)
+        answer(req, res, 422, e)
     })
 }
 
@@ -47,7 +48,7 @@ async function emailAsigned(email, code, req, res) {
     .getOne()
     .then(data =>{
         if(data.code != null){
-            response.answer(req, res, 422, `el usuario ${data.email} tiene cupon asignado`)
+            answer(req, res, 422, `el usuario ${data.email} tiene cupon asignado`)
         }
     })
     .catch(e =>{
@@ -56,22 +57,22 @@ async function emailAsigned(email, code, req, res) {
 }
 
 async function updateCoupon(email, code, req, res){
-    let time = moment() 
+    let time = moment()
 
     await getConnection()
     .createQueryBuilder()
     .update(Coupons)
-    .set({ 
+    .set({
         email: email,
         assigned: time.format("YYYY-MM-DD HH:mm:ss"),
     })
     .where("code = :code", { code: code })
     .execute()
     .then(data => {
-        response.answer(req, res, 201, data)
+        answer(req, res, 201, data)
     })
     .catch(e =>{
-        response.answer(req, res, 422, e)
+        answer(req, res, 422, e)
     })
 }
 
@@ -82,14 +83,13 @@ async function notAssigned(id, req, res) {
     .getOne()
     .then(data =>{
         if(data.email != null){
-            response.answer(req, res, 404, "el id del cupon está asignado")
+            answer(req, res, 404, "id asingned")
+        }else{
+            delCoupon(id, req, res)
         }
-        
-        delCoupon(id, req, res)
-
     })
     .catch(e => {
-        response.answer(req, res, 404, "id no identificado", e)
+        answer(req, res, 404, "id no identificado")
     })
 }
 
@@ -101,16 +101,20 @@ async function delCoupon(id, req, res){
     .where("id = :id", { id: id })
     .execute()
     .then(data => {
-        response.answer(req, res, 201, "cupon eliminado")
+        if(data.affected == 0){
+            answer(req, res, 404, "id non-existent")
+        }
+        answer(req, res, 201, "cupon eliminado")
     })
     .catch(e => {
-        response.answer(req, res, 422, e)
+        answer(req, res, 404, e)
     })
 }
 
-module.exports = {
+export  {
     queryCoupon,
     addCoupon,
     emailAsigned,
+    updateCoupon,
     notAssigned
 }

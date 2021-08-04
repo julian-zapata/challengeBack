@@ -8,6 +8,7 @@
       "typescript": "3.3.3333"
    },
    "dependencies": {
+      "joi": "^17.4.2",
       "moment": "^2.29.1",
       "mysql": "^2.14.1",
       "nodemon": "^2.0.12",

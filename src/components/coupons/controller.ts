@@ -6,6 +6,19 @@ import { answer } from "../../routes/response";
 
 const time = require("moment")
 
+async function allCoupons(req, res) {
+    await getRepository(Coupons)
+    .createQueryBuilder("coupons")
+    .getMany()
+    .then(data => {
+        answer(req, res, 200, {data})
+        
+    })
+    .catch(e => {
+        answer(req, res, 404, e)
+    })
+}
+
 async function queryCoupon(email, code, req, res) {
 
     await getRepository(Coupons)
@@ -34,7 +47,7 @@ async function addCoupon(code, req, res){
     ])
     .execute()
     .then(() =>{
-        answer(req, res, 201, `creado con exito, ${code}`)
+        answer(req, res, 201, `coupon ${code} successfully created`)
     })
     .catch(e => {
         answer(req, res, 422, e)
@@ -112,6 +125,7 @@ async function delCoupon(id, req, res){
 }
 
 export  {
+    allCoupons,
     queryCoupon,
     addCoupon,
     emailAsigned,

@@ -10,8 +10,9 @@ export async function getAllStores(req, res) {
     .createQueryBuilder("stores")
     .getMany()
     .then(data => {
+        let all = "all stores"
         let amountStores = Object.keys(data).length
-        answer(req, res, 200, {data, amountStores})
+        answer(req, res, 200, {all, amountStores, data})
         
     })
     .catch(e => {
@@ -31,7 +32,8 @@ export async function pageStores(page, req, res) {
     .take(10)
     .getMany()
     .then(data => {
-        answer(req, res, 200, data)
+        let numberPage = page
+        answer(req, res, 200, {numberPage, data})
     })
     .catch(e => {
         answer(req, res, 422, e)
@@ -40,15 +42,21 @@ export async function pageStores(page, req, res) {
 
 //busqueda de tienda por nombre
 export async function nameStore(name, req, res) {
+
     await getRepository(Stores)
     .createQueryBuilder("stores")
     .where("stores.name = :name", { name: name })
     .getOne()
     .then(data => {
-        answer(req, res, 200, data)
+        if(data.name == undefined || data.name == null){
+            answer(req, res, 422, "Not found")
+        }else{
+            answer(req, res, 200, data)
+        }
     })
     .catch(e => {
-        answer(req, res, 422, e)
+        // console.log("no entra")
+        answer(req, res, 422, "Not found")
     })
 }
 
@@ -65,8 +73,8 @@ export async function addStore(name, address, req, res){
         }
     ])
     .execute()
-    .then(data =>{
-        answer(req, res, 201, `creado exitosamente`)
+    .then((data) =>{
+        answer(req, res, 201, `successfully created`)
     })
     .catch(e => {
         answer(req, res, 422, e)
@@ -83,9 +91,9 @@ export async function deleteStore(id, req, res) {
     .execute()
     .then(row => {
         if(row.affected == 0){
-            answer(req, res, 422, "no se encuentra tienda")
+            answer(req, res, 422, "store not found")
         }
-        answer(req, res, 201, "tienda eliminada")
+        answer(req, res, 201, "store removed")
     })
     .catch(e => {
         answer(req, res, 422, e)

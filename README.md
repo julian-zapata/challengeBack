@@ -18,5 +18,9 @@ Apoyo para la arquitectura del proyecto
 https://www.youtube.com/watch?v=pCxL1sdjeCc&t
 
 ***
+Forma de extraer fecha de un tipo DATETIME en sql
+https://es.stackoverflow.com/questions/41391/obtener-fechas-solo-de-dia-mes-a%C3%B1o-sin-horas
+
+***
 
 

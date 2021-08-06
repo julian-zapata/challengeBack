@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { answer } from "../../routes/response";
 import { couponValidate, emailValidate } from "../../routes/validations";
-import {queryCoupon, addCoupon, emailAsigned, notAssigned} from "./controller"
+import {queryCoupon, addCoupon, emailAsigned, notAssigned, allCoupons} from "./controller"
 
 const express = require("express");
 const appCoupons = express()
@@ -14,10 +14,11 @@ appCoupons.get("/",async function(req, res){
     //Se ingresan ambos queriy string para comprobar correspondencia de un cupon
     if(reqEmail != null && reqCode != null){
         await queryCoupon(reqEmail, reqCode, req, res)
+    }else{
+        await allCoupons(req, res)
     }
 
-    //si alguno no existe arrojará un error
-    answer(req, res, 404, "coupon and email required")
+    
 })
 
 appCoupons.post("/", async function (req, res){

@@ -15,7 +15,6 @@ appStore.get("/", async function(req, res) {
     }
 
     if(name != null){
-        console.log(name)
         await nameStore(name, req, res)
     }
 
@@ -32,8 +31,8 @@ appStore.post("/", async function(req, res) {
         .then(() => {
             addStore(name, address, req, res)
         })
-        .catch(() =>{
-            answer(req, res, 422, "los campos deben estar completos")
+        .catch((e) =>{
+            answer(req, res, 422, e)
         })
 })
 

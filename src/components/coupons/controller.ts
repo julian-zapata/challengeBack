@@ -1,8 +1,9 @@
 import "reflect-metadata";
-import { getRepository, getConnection} from "typeorm";
+import { getRepository, getConnection, IsNull} from "typeorm";
 import { Coupons } from "../../entity/Coupons";
 import moment = require("moment");
 import { answer } from "../../routes/response";
+import { ENOTEMPTY } from "constants";
 
 const time = require("moment")
 
@@ -28,12 +29,14 @@ async function queryCoupon(email, code, req, res) {
     .getOne()
     .then(data =>{
         if(data == null){
-            answer(req, res, 404, "no correspondence")
+            let response = "no correspondence"
+            answer(req, res, 404, {response, data})
         }
         answer(req, res, 200, data)
     })
-    .catch(() => {
-        answer(req, res, 404, "Error")
+    .catch(e => {
+        let error = "Error"
+        answer(req, res, 404, {error, e})
     })
 }
 
@@ -46,11 +49,13 @@ async function addCoupon(code, req, res){
         { code: code },
     ])
     .execute()
-    .then(() =>{
-        answer(req, res, 201, `coupon ${code} successfully created`)
+    .then(data =>{
+        let response = `coupon ${code} successfully created`
+        answer(req, res, 201, {response, data} )
     })
     .catch(e => {
-        answer(req, res, 422, e)
+        let response = "invalid coupon"
+        answer(req, res, 422, {response, e})
     })
 }
 
@@ -61,7 +66,8 @@ async function emailAsigned(email, code, req, res) {
     .getOne()
     .then(data =>{
         if(data.code != null){
-            answer(req, res, 422, `el usuario ${data.email} tiene cupon asignado`)
+            let response = `user ${data.email} has a coupon assigned`
+            answer(req, res, 422, {response, data})
         }
     })
     .catch(e =>{
@@ -70,6 +76,7 @@ async function emailAsigned(email, code, req, res) {
 }
 
 async function updateCoupon(email, code, req, res){
+    //npm moment para formatear fecha
     let time = moment()
 
     await getConnection()
@@ -82,7 +89,12 @@ async function updateCoupon(email, code, req, res){
     .where("code = :code", { code: code })
     .execute()
     .then(data => {
-        answer(req, res, 201, data)
+        if(data.affected == 0){
+            let response = "invalid or not registered coupon"
+            answer(req, res, 422, {response, data})
+        }
+        let response = "updated successfully"
+        answer(req, res, 201, {response, data})
     })
     .catch(e =>{
         answer(req, res, 422, e)
@@ -96,13 +108,15 @@ async function notAssigned(id, req, res) {
     .getOne()
     .then(data =>{
         if(data.email != null){
-            answer(req, res, 404, "id asingned")
+            let response = "id asingned, cannot be deleted"
+            answer(req, res, 404, {response, data} )
         }else{
             delCoupon(id, req, res)
         }
     })
     .catch(e => {
-        answer(req, res, 404, "id no identificado")
+        let response = "id nonexistent"
+        answer(req, res, 404, { response, e})
     })
 }
 
@@ -115,9 +129,11 @@ async function delCoupon(id, req, res){
     .execute()
     .then(data => {
         if(data.affected == 0){
-            answer(req, res, 404, "id non-existent")
+            let response = "id non-existent"
+            answer(req, res, 404, {response, data} )
         }
-        answer(req, res, 201, "cupon eliminado")
+        let response = "coupon deleted"
+        answer(req, res, 201, {response, data} )
     })
     .catch(e => {
         answer(req, res, 404, e)

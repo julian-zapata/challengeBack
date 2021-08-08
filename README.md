@@ -1,9 +1,11 @@
 # Challenge Back End
 
+Microservicio de gestión de cupones y tiendas desarrollado en TypeScript y TypeORM
 
-```
-Los parámetros requeridos son solicitados mediante "body" salvo que la consigna especifique que sean requeridos mediante query string u otro método
-```
+El programa se ejecuta con el comando "npm start" por defecto de typeORM
+
+Los parámetros requeridos son solicitados mediante "body" salvo que la consigna especifique que sean requeridos mediante query string u otro método.
+
 ## conflictos y consultas
 ***
 Tuve un problema que me demoró el desarrollo del proyecto y es la conexción con la base de datos.
@@ -22,5 +24,8 @@ Forma de extraer fecha de un tipo DATETIME en sql
 https://es.stackoverflow.com/questions/41391/obtener-fechas-solo-de-dia-mes-a%C3%B1o-sin-horas
 
 ***
+
+Todas las consultas SQL fueron extraídas de la página oficial de TypeORM
+
 
 

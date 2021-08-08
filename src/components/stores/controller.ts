@@ -55,7 +55,6 @@ export async function nameStore(name, req, res) {
         }
     })
     .catch(e => {
-        // console.log("no entra")
         answer(req, res, 422, "Not found")
     })
 }
@@ -74,7 +73,8 @@ export async function addStore(name, address, req, res){
     ])
     .execute()
     .then((data) =>{
-        answer(req, res, 201, `successfully created`)
+        let store = `successfully created`
+        answer(req, res, 201, {store, data})
     })
     .catch(e => {
         answer(req, res, 422, e)
@@ -91,9 +91,11 @@ export async function deleteStore(id, req, res) {
     .execute()
     .then(row => {
         if(row.affected == 0){
-            answer(req, res, 422, "store not found")
+            let error = "store not found"
+            answer(req, res, 422, {error, row})
         }
-        answer(req, res, 201, "store removed")
+        let response = "store removed"
+        answer(req, res, 201, {response, row})
     })
     .catch(e => {
         answer(req, res, 422, e)

@@ -8,18 +8,19 @@ const appStats = express()
 
 appStats.get("/", async function(req, res){
 
-    let isExists = await couponExists()
-    let isAsigned = await couponAsigned()
-    let isNotAsigned = await couponNotAsigned()
-    let isAsignedPerDay = await couponAsignedPerDay()
-    let isCreatedPerDay = await couponCreatedPerDay()
+   
+    let numberCouponsExisting = await couponExists()
+    let numberCouponsAsigned = await couponAsigned()
+    let numberCouponsNotAsigned = await couponNotAsigned()
+    let numberCouponsAsignedPerDay = await couponAsignedPerDay()
+    let numberCouponsCreatedPerDay = await couponCreatedPerDay()
 
     answer(req, res, 201, {
-        isExists,
-        isAsigned,
-        isNotAsigned,
-        isAsignedPerDay,
-        isCreatedPerDay
+        numberCouponsExisting,
+        numberCouponsAsigned,
+        numberCouponsNotAsigned,
+        numberCouponsAsignedPerDay,
+        numberCouponsCreatedPerDay
     })
 
 })

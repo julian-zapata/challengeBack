@@ -24,15 +24,14 @@ appCoupons.get("/",async function(req, res){
 appCoupons.post("/", async function (req, res){
 
     let code = req.body.coupon;
-    console.log(code)
-
     
     await couponValidate.validateAsync({code})
         .then(() => {
             addCoupon(code, req, res)
         })
         .catch(e =>{
-            answer(req, res, 422, e)
+            let error = "coupons require 8 characters"
+            answer(req, res, 422, {error, e})
         })
 
    
@@ -48,7 +47,8 @@ appCoupons.patch("/", async function (req, res){
             emailAsigned(email, code, req, res)
         })
         .catch(e =>{
-            answer(req, res, 422, e)
+            let error = "invalid email"
+            answer(req, res, 422, {error, e})
         })
 
 })

@@ -1,0 +1,292 @@
+{
+	"info": {
+		"_postman_id": "dc3ae66f-15eb-4f8a-a32c-14844b8af73d",
+		"name": "challengeRoofTop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Coupons",
+			"item": [
+				{
+					"name": "getCoupon",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/coupons",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"coupons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCouponByMail&coupon",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/coupons?email=uf@cuze.cw&coupon=DKQTZVWV",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"coupons"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "uf@cuze.cw"
+								},
+								{
+									"key": "coupon",
+									"value": "DKQTZVWV"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addCoupon",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "coupon",
+									"value": "IIDNEL55",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/coupons",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"coupons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "emailValidate&updateCoupon",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "pepito.rodriguez@maildelsapo.com",
+									"type": "text"
+								},
+								{
+									"key": "coupon",
+									"value": "WC1ZBIHF",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/coupons",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"coupons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCoupon",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/coupons/98",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"coupons",
+								"98"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stores",
+			"item": [
+				{
+					"name": "AllStores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/stores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PageStores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/stores?page=34",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"stores"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "34"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "storeByName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/stores?name=McLeodUSA Incorporated",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"stores"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "McLeodUSA Incorporated"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addStore",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "JulianNewYork",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "David 1554, New York, España",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/stores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteStore",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/stores/530",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"stores",
+								"530"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "stats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/stats",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stats"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
